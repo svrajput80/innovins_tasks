@@ -7,4 +7,6 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
+define('FROM_EMAIL', 'techdeveloper8171@gmail.com');
+define('EMAIL_PASSWORD', 'jfbw czii njoq fryc');
 ?>

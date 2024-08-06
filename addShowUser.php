@@ -1,5 +1,13 @@
 <?php  
 require 'addUser.php';
+
+session_start();
+if(empty($_SESSION["username"])){
+    $_SESSION["error"] = '!Error Valid user require Login first to access this page';
+    header('Location: login.php');
+    session_destroy();
+}
+
 ?>
 <style>
 

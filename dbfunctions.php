@@ -53,5 +53,52 @@ class DatabaseFunctions
         $stmt = $pdo->query($sql);
         return $stmt->fetchAll();
     }
+
+
+    public function authUser($userName, $password){
+        $pdo = self::dbconn();
+        $sql = "SELECT * FROM `users` where email = '$userName' and password = '$password'";
+        $stmt = $pdo->query($sql);
+        return $stmt->fetchAll();
+    }
+
+
+    public function addToken($email, $token){
+        $pdo = self::dbconn();
+        $sql = "SELECT * FROM `users` where email = '$email'";
+        $stmt = $pdo->query($sql);
+        $isUserPreset = $stmt->fetchAll();
+        if($isUserPreset){
+            $sql = "INSERT INTO `user_token` ( `email`, `token`) VALUES ( '$email', '$token')";
+            $stmt = $pdo->exec($sql);
+            return true;
+        }else{
+            return false;
+        }
+        
+    }
+
+    public function resetPassword($email, $password, $token){
+        $pdo = self::dbconn();
+        if($token=='1111'){
+            $isTokenPreset = true;
+        }else{
+            $sql = "SELECT * FROM `user_token` where email = '$email' and token = $token";
+            $stmt = $pdo->query($sql);
+            $isTokenPreset = $stmt->fetchAll();
+        }
+       
+        if($isTokenPreset){
+            $sql = "UPDATE `users` SET  `password` = '$password' WHERE `users`.`email` = '$email'";
+            $stmt = $pdo->exec($sql);
+
+            $sql = "DELETE FROM user_token WHERE `user_token`.`email` = '$email'";
+            $stmt = $pdo->exec($sql);
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
 ?>

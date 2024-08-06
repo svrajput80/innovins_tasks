@@ -42,11 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST['email'];
             $password = $_POST['password'];
 
+            $gotLogIn = $_POST['gotLogIn'];
             try {
                 $db = new DatabaseFunctions();
                 $db->insertUser($username, $email, $password);
                 echo "User added successfully!";
-                header('Location: addShowUser.php');
+                $gotLogIn == 'login' ? header('Location: login.php') : header('Location: addShowUser.php');
             } catch (Exception $e) {
                 echo "Failed to add user: " . $e->getMessage();
                 header('Location: addShowUser.php');
