@@ -61,7 +61,7 @@ a {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 15px;
 }
 
 .container {
@@ -304,8 +304,13 @@ displayThemeButtons();
 
 </script>
 <body>
+
     <section class="container">
         <div class="login-container" >
+        <h1>Welcome, <?php if(!empty($_SESSION["username"])){ echo $_SESSION["username"]; } ?></h1>
+    <form action="authUser.php" method="post">
+        <button type="submit">Logout</button>
+    </form>
             <div class="circle circle-one"></div>
             <div class="form-container">
                  <h1 class="opacity">Create User</h1>

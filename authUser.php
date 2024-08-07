@@ -60,6 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
             break;
 
+        default:
+            session_destroy();
+            header('Location: login.php');
+            break;
+         
+
         }
 
 }
