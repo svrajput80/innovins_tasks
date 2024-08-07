@@ -1,7 +1,7 @@
 <?php
 require 'dbfunctions.php';
 require 'sentEmailOTP.php';
-
+$db = new DatabaseFunctions();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
     switch ($_POST['login']) {
@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $password = $_POST['password'];
         
             try {
-                $db = new DatabaseFunctions();
+                global $db;
                 $isValidUser =  $db->authUser( $email, $password);          
                 if(empty($isValidUser)){
                     unset($_SESSION["username"]);
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST['email'];
             $_SESSION["email"] = $email;
             $token = rand(1000, 9999);
-            $db = new DatabaseFunctions();
+            global $db;
             $isValidUser =  $db->addToken( $email, $token); 
             if($isValidUser == false){
                 echo 'Given Email Address is not registor Please Registor it first <a href="/register.php">click here </a> to Registor' ; die;
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $email = $_POST['email'];
             $password = $_POST['password'];
             $token = $_POST['token'];
-            $db = new DatabaseFunctions();
+            global $db;
             $isValidUser =  $db->resetPassword($email, $password, $token);
             if($isValidUser == false){
                 echo 'Given Token is valid' ; die;
